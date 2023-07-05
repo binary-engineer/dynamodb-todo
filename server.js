@@ -13,15 +13,12 @@ const animals = db.collection("animals");
 // console.log(item);
 
 app.get("/", async (req, res) => {
-  animals
-    .get("leo")
-    .then((result) => {
-      res.json(result.Items);
-    })
-    .catch((err) => {
-      console.error(err);
-      res.status(500).json({ error: "An error occurred" });
-    });
+  try {
+    let item = await animals.get("leo");
+    res.status(200).send(item);
+  } catch (error) {
+    res.send(error);
+  }
 });
 
 const port = 3000 || process.env.PORT;
